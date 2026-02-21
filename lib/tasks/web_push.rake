@@ -2,7 +2,7 @@
 
 namespace :web_push do
   desc "Send a test push notification to all subscribers"
-  task :test, [:title, :body] => :environment do |_t, args|
+  task :test, [ :title, :body ] => :environment do |_t, args|
     title = args[:title] || "Test Notification"
     body  = args[:body]  || "This is a test push from Rails 🚀"
 
