@@ -17,6 +17,12 @@ export default class extends Controller {
       return
     }
 
+    if (!this.vapidPublicKeyValue) {
+      this.renderStatus("error", "VAPID public key is not configured on the server.")
+      if (this.hasButtonTarget) this.buttonTarget.disabled = true
+      return
+    }
+
     // Register / retrieve the service worker
     this.registration = await navigator.serviceWorker.register("/service-worker", { scope: "/" })
     await navigator.serviceWorker.ready
