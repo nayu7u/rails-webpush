@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   # Push subscription management (JSON API)
   resource :push_subscription, only: %i[create destroy]
 
+  # Manual notification trigger
+  resource :notification, only: %i[create]
+
   # Defines the root path route ("/")
   root "home#index"
 end

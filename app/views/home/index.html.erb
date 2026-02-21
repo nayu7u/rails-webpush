@@ -23,4 +23,10 @@
   <div class="mt-8 text-sm text-gray-400">
     <p>Subscriptions in DB: <strong><%= PushSubscription.count %></strong></p>
   </div>
+
+  <%# Test send button %>
+  <div class="mt-4">
+    <%= button_to "Send Test Notification", notification_path,
+          class: "px-4 py-2 rounded-lg text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 transition" %>
+  </div>
 </div>
