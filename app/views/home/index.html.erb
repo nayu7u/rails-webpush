@@ -1,0 +1,26 @@
+<div class="w-full max-w-lg mx-auto"
+     data-controller="push-subscription"
+     data-push-subscription-vapid-public-key-value="<%= @vapid_public_key %>"
+     data-push-subscription-subscribe-url-value="<%= push_subscription_path %>"
+     data-push-subscription-unsubscribe-url-value="<%= push_subscription_path %>">
+
+  <h1 class="text-3xl font-bold mb-8">🔔 Web Push Demo</h1>
+
+  <%# Status indicator %>
+  <div class="mb-6 p-4 rounded-lg border" data-push-subscription-target="status">
+    <p class="text-gray-500">Checking push support…</p>
+  </div>
+
+  <%# Subscribe / Unsubscribe button %>
+  <button data-push-subscription-target="button"
+          data-action="push-subscription#toggle"
+          class="px-6 py-3 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
+          disabled>
+    Loading…
+  </button>
+
+  <%# Push notification count %>
+  <div class="mt-8 text-sm text-gray-400">
+    <p>Subscriptions in DB: <strong><%= PushSubscription.count %></strong></p>
+  </div>
+</div>
