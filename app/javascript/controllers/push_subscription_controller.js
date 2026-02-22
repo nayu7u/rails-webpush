@@ -128,7 +128,10 @@ export default class extends Controller {
     }
 
     this.statusTarget.className = `mb-6 p-4 rounded-lg border ${colors[type] || colors.info}`
-    this.statusTarget.innerHTML = `<p>${message}</p>`
+    this.statusTarget.textContent = ""
+    const paragraph = document.createElement("p")
+    paragraph.textContent = message
+    this.statusTarget.appendChild(paragraph)
   }
 
   get csrfToken() {
