@@ -47,4 +47,28 @@ class PushSubscriptionTest < ActiveSupport::TestCase
     sub = PushSubscription.new(@valid_attrs.merge(user_agent: nil))
     assert sub.valid?
   end
+
+  test "endpoint must be a valid https url" do
+    sub = PushSubscription.new(@valid_attrs.merge(endpoint: "not-a-url"))
+    assert_not sub.valid?
+    assert_includes sub.errors[:endpoint], "must be a valid HTTPS URL"
+  end
+
+  test "endpoint must use https" do
+    sub = PushSubscription.new(@valid_attrs.merge(endpoint: "http://example.com/push"))
+    assert_not sub.valid?
+    assert_includes sub.errors[:endpoint], "must be a valid HTTPS URL"
+  end
+
+  test "p256dh must be a valid base64 string" do
+    sub = PushSubscription.new(@valid_attrs.merge(p256dh: "invalid-p256dh***"))
+    assert_not sub.valid?
+    assert_includes sub.errors[:p256dh], "must be a valid Base64 string"
+  end
+
+  test "auth must be a valid base64 string" do
+    sub = PushSubscription.new(@valid_attrs.merge(auth: "invalid-auth***"))
+    assert_not sub.valid?
+    assert_includes sub.errors[:auth], "must be a valid Base64 string"
+  end
 end
