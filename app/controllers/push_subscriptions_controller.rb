@@ -15,7 +15,7 @@ class PushSubscriptionsController < ApplicationController
 
   # DELETE /push_subscriptions
   def destroy
-    subscription = PushSubscription.find_by(endpoint: params[:endpoint])
+    subscription = PushSubscription.find_by(endpoint: destroy_params[:endpoint])
 
     if subscription&.destroy
       render json: { message: "Subscription removed" }, status: :ok
@@ -28,5 +28,9 @@ class PushSubscriptionsController < ApplicationController
 
   def subscription_params
     params.expect(subscription: [ :endpoint, :p256dh, :auth, :user_agent ])
+  end
+
+  def destroy_params
+    { endpoint: params.expect(:endpoint) }
   end
 end
