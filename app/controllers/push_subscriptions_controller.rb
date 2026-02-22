@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class PushSubscriptionsController < ApplicationController
-  skip_forgery_protection only: %i[create destroy]
-
   # POST /push_subscriptions
   def create
     subscription = PushSubscription.find_or_initialize_by(endpoint: subscription_params[:endpoint])
