@@ -62,4 +62,19 @@ class SendWebPushNotificationJobTest < ActiveJob::TestCase
       )
     end
   end
+
+  test "removes subscription on InvalidSubscription error" do
+    response = Object.new
+    response.define_singleton_method(:code) { "404" }
+    response.define_singleton_method(:body) { "" }
+
+    WebPush.define_singleton_method(:payload_send) { |**_args| raise WebPush::InvalidSubscription.new(response, "localhost") }
+
+    assert_difference "PushSubscription.count", -1 do
+      SendWebPushNotificationJob.perform_now(
+        push_subscription_id: @subscription.id,
+        payload: @payload
+      )
+    end
+  end
 end
