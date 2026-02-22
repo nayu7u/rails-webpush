@@ -86,10 +86,13 @@ export default class extends Controller {
 
   async unsubscribe() {
     const endpoint = this.subscription.endpoint
-    await this.subscription.unsubscribe()
-    this.subscription = null
+    const unsubscribed = await this.subscription.unsubscribe()
+    if (!unsubscribed) throw new Error("Failed to unsubscribe from push service")
 
-    await fetch(this.unsubscribeUrlValue, {
+    this.subscription = null
+    this.updateUI()
+
+    const response = await fetch(this.unsubscribeUrlValue, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -98,7 +101,7 @@ export default class extends Controller {
       body: JSON.stringify({ endpoint })
     })
 
-    this.updateUI()
+    if (!response.ok) throw new Error("Unsubscribed locally, but server cleanup failed. Please retry.")
   }
 
   updateUI() {
