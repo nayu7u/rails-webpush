@@ -1,8 +1,0 @@
-on:
-  push:
-    branches: [main, protected]
-  pull_request:
-    branches: [main]
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.txt'
